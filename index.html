@@ -38,29 +38,23 @@
       <!-- Talkie timeline config -->
       <script>
         Talkie.timeline("#soundtrack", {
-        "00:13": newYorkCity,
-        "00:17": buffalo,
-        "00:20": newZealand,
-        "00:24": buffalo,
-        "00:28": fredonia
+        "00:13": moveMapTo([40.7298, -74.0027], 13),
+        "00:17": moveMapTo([42.8963, -78.8822], 12),
+        "00:20": moveMapTo([-41.112, -188.767], 6),
+        "00:24": moveMapTo([42.8963, -78.8822], 12),
+        "00:28": moveMapTo([42.44, -79.33], 17)
       });
       
-      // Each location defined
-	function newYorkCity() {
-        map.setView(new L.LatLng(40.7298, -74.0027), 13);
-    	}
-
-    	function buffalo() {
-        map.setView(new L.LatLng(42.8963, -78.8822), 12)
-    	}
-    
-	function newZealand() {
-        map.setView(new L.LatLng(-41.112, -188.767), 6);
-    	}
-
-    	function fredonia() {
-        map.setView(new L.LatLng(42.44, -79.33), 17);
-    	}
+      function moveMapTo(center, zoom) {
+        return function() {
+          map.setView(center, zoom);
+          this.setUndo(function() {
+            // Use an empty undo function to make the move repeatable,
+            // i.e. so it fires again if you scrub back and play past
+            // it a second time.
+          });
+        };
+      }
       </script>
   </body>
 </html>
